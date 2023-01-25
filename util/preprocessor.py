@@ -1,9 +1,9 @@
 import torch
-import os
 import multiprocessing
 import pandas as pd
 import pytorch_lightning as pl
 
+from sklearn.model_selection import train_test_split
 from scipy.stats import zscore
 from imblearn.over_sampling import SMOTE
 from torch.utils.data import TensorDataset, DataLoader
@@ -15,7 +15,7 @@ class Preprocessor(pl.LightningDataModule):
         self.batch_size = batch_size
 
     def setup(self, stage=None):
-        train_set, test_set = self.preprocessor(self.dataset)   
+        train_set, test_set = self.preprocessor()   
         if stage == "fit":
             self.train_set = train_set
         elif stage == "test":
@@ -37,13 +37,26 @@ class Preprocessor(pl.LightningDataModule):
             num_workers=multiprocessing.cpu_count()
         )
 
-    def preprocessor(self, dataset):
-        dataset = self.normalization(dataset)
+    def preprocessor(self):
+        dataset = self.normalization(self.dataset)
+        X_train_res, y_train_res = self.oversampling(dataset)
+        y_train_res = self.label_encoding(y_train_res)
+        self.feature_size = len(X_train_res.columns.tolist())
 
-        X_train, y_train = self.oversampling(dataset)
-        y_train = self.label_encoding(y_train)
+        X_train, X_test, y_train, y_test = train_test_split(X_train_res, y_train_res, test_size=0.2, random_state=42)
+        
+        X_train_tensor = torch.from_numpy(X_train).float()
+        y_train_tensor = torch.from_numpy(y_train.values.ravel()).float()
+        X_test_tensor = torch.from_numpy(X_test).float()
+        y_test_tensor = torch.from_numpy(y_test.values.ravel()).float()
 
-        self.feature_size = len(X_train.columns.tolist())
+        y_train_tensor = y_train_tensor.unsqueeze(1)
+        train_set = TensorDataset(X_train_tensor, y_train_tensor)
+
+        y_test_tensor = y_test_tensor.unsqueeze(1)
+        test_set = TensorDataset(X_test_tensor, y_test_tensor)
+
+        return train_set, test_set
 
     def normalization(self, dataset):
         dataset['tau1 Z'] = zscore(dataset['tau1'])
