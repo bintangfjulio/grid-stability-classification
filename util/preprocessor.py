@@ -2,6 +2,7 @@ import torch
 import multiprocessing
 import pandas as pd
 import pytorch_lightning as pl
+import numpy as np
 
 from sklearn.model_selection import train_test_split
 from scipy.stats import zscore
@@ -45,9 +46,9 @@ class Preprocessor(pl.LightningDataModule):
 
         X_train, X_test, y_train, y_test = train_test_split(X_train_res, y_train_res, test_size=0.2, random_state=42)
         
-        X_train_tensor = torch.from_numpy(X_train).float()
+        X_train_tensor = torch.from_numpy(X_train.values).float()
         y_train_tensor = torch.from_numpy(y_train.values.ravel()).float()
-        X_test_tensor = torch.from_numpy(X_test).float()
+        X_test_tensor = torch.from_numpy(X_test.values).float()
         y_test_tensor = torch.from_numpy(y_test.values.ravel()).float()
 
         y_train_tensor = y_train_tensor.unsqueeze(1)
@@ -75,7 +76,7 @@ class Preprocessor(pl.LightningDataModule):
         return dataset
 
     def label_encoding(self, y_train):
-        encoder = {'unstable': [1, 0], 'stable': [0, 1]}
+        encoder = {'unstable': 0, 'stable': 1}
         y_train = y_train.astype('str').map(encoder)
 
         return y_train
