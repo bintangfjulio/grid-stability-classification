@@ -13,7 +13,7 @@ if __name__ == "__main__":
     
     checkpoint_callback = ModelCheckpoint(dirpath='./checkpoints/bilstm_result', monitor='val_loss')
     logger = TensorBoardLogger('log', name='bilstm_result')
-    early_stop_callback = EarlyStopping(monitor='train_loss', min_delta=0.00, check_on_train_epoch_end=1, patience=10)
+    early_stop_callback = EarlyStopping(monitor='val_loss', min_delta=0.00, check_on_train_epoch_end=1, patience=10)
 
     trainer = pl.Trainer(
         accelerator='gpu',
