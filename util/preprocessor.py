@@ -41,7 +41,6 @@ class Preprocessor(pl.LightningDataModule):
         dataset = self.normalization(self.dataset)
         X_train_res, y_train_res = self.oversampling(dataset)
         y_train_res = self.label_encoding(y_train_res)
-        self.feature_size = len(X_train_res.columns.tolist())
 
         X_train, X_test, y_train, y_test = train_test_split(X_train_res, y_train_res, test_size=0.3, random_state=42)
         
@@ -87,6 +86,3 @@ class Preprocessor(pl.LightningDataModule):
         X_train, y_train = oversampling.fit_resample(X, y)
 
         return X_train, y_train
-
-    def get_feature_size(self):
-        return self.feature_size
