@@ -1,3 +1,3 @@
 ## Data Mining Goals
-1. Klasifikasi stable/unstable
-2. Regresi stab sebagai indikator kestabilan
+1. Klasifikasi electircal grid stable/unstable
+2. Regresi electircal grid stab sebagai indikator kestabilan
