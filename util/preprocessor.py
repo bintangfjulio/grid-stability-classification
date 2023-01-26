@@ -78,13 +78,8 @@ class Preprocessor(pl.LightningDataModule):
         X_test_tensor = torch.tensor(X_test.values.tolist())
         y_test_tensor = torch.tensor(y_test.values.tolist())
 
-        y_train_tensor = y_train_tensor.unsqueeze(1)
         train_set = TensorDataset(X_train_tensor, y_train_tensor)
-        
-        y_valid_tensor = y_valid_tensor.unsqueeze(1)
         valid_set = TensorDataset(X_valid_tensor, y_valid_tensor)
-
-        y_test_tensor = y_test_tensor.unsqueeze(1)
         test_set = TensorDataset(X_test_tensor, y_test_tensor)
        
         torch.save(train_set, "dataset/train_set.pt")
