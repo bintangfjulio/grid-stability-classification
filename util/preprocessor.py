@@ -69,14 +69,14 @@ class Preprocessor(pl.LightningDataModule):
         X_train_valid, X_test, y_train_valid, y_test = train_test_split(X_train_res, y_train_res, test_size=0.2, random_state=42)
         X_train, X_valid, y_train, y_valid = train_test_split(X_train_valid, y_train_valid, test_size=0.1, random_state=42)
     
-        X_train_tensor = torch.from_numpy(X_train.values).float()
-        y_train_tensor = torch.from_numpy(y_train.values.ravel()).float()
+        X_train_tensor = torch.tensor(X_train.values.tolist())
+        y_train_tensor = torch.tensor(y_train.values.tolist())
         
-        X_valid_tensor = torch.from_numpy(X_valid.values).float()
-        y_valid_tensor = torch.from_numpy(y_valid.values.ravel()).float()
+        X_valid_tensor = torch.tensor(X_valid.values.tolist())
+        y_valid_tensor = torch.tensor(y_valid.values.tolist())
         
-        X_test_tensor = torch.from_numpy(X_test.values).float()
-        y_test_tensor = torch.from_numpy(y_test.values.ravel()).float()
+        X_test_tensor = torch.tensor(X_test.values.tolist())
+        y_test_tensor = torch.tensor(y_test.values.tolist())
 
         y_train_tensor = y_train_tensor.unsqueeze(1)
         train_set = TensorDataset(X_train_tensor, y_train_tensor)
@@ -110,7 +110,7 @@ class Preprocessor(pl.LightningDataModule):
         return dataset
 
     def label_encoding(self, y_train):
-        encoder = {'unstable': 0, 'stable': 1}
+        encoder = {'unstable': [1, 0], 'stable': [0, 1]}
         y_train = y_train.astype('str').map(encoder)
 
         return y_train
