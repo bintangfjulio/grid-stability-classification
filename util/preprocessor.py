@@ -2,7 +2,6 @@ import torch
 import multiprocessing
 import pandas as pd
 import pytorch_lightning as pl
-import numpy as np
 
 from sklearn.model_selection import train_test_split
 from scipy.stats import zscore
@@ -44,7 +43,7 @@ class Preprocessor(pl.LightningDataModule):
         y_train_res = self.label_encoding(y_train_res)
         self.feature_size = len(X_train_res.columns.tolist())
 
-        X_train, X_test, y_train, y_test = train_test_split(X_train_res, y_train_res, test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X_train_res, y_train_res, test_size=0.3, random_state=42)
         
         X_train_tensor = torch.from_numpy(X_train.values).float()
         y_train_tensor = torch.from_numpy(y_train.values.ravel()).float()
