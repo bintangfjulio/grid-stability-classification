@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     trainer = pl.Trainer(
         accelerator='gpu',
-        max_epochs=200,
+        max_epochs=100,
         default_root_dir='./checkpoints/bilstm_result',
         callbacks = [checkpoint_callback, early_stop_callback],
         deterministic=True,
