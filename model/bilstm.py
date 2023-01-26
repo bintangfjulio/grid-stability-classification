@@ -5,9 +5,9 @@ import pytorch_lightning as pl
 from torchmetrics.classification import BinaryAccuracy
 
 class BiLSTM(pl.LightningModule):
-    def __init__(self, lr, input_size, hidden_size, num_classes=2, dropout=0.5, num_layers=2):
+    def __init__(self, lr, module, num_classes=2, dropout=0.5):
         super(BiLSTM, self).__init__()
-        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, bidirectional=True, batch_first=True)
+        self.lstm = nn.LSTM(input_size=module.get_feature_size(), hidden_size=module.get_feature_size(), num_layers=2, bidirectional=True, batch_first=True)
         self.dropout = nn.Dropout(dropout) 
         self.output_layer = nn.Linear(hidden_size * 2, num_classes) 
         self.sigmoid = nn.Sigmoid()   
