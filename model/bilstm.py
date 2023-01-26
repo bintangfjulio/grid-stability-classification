@@ -2,17 +2,17 @@ import torch
 import torch.nn as nn
 import pytorch_lightning as pl
 
-from torchmetrics.classification import MulticlassAccuracy
+from torchmetrics.classification import BinaryAccuracy
 
 class BiLSTM(pl.LightningModule):
-    def __init__(self, num_classes, lr, input_size, hidden_size, dropout=0.5, num_layers=2):
+    def __init__(self, lr, input_size, hidden_size, num_classes=2, dropout=0.5, num_layers=2):
         super(BiLSTM, self).__init__()
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers, bidirectional=True, batch_first=True)
         self.dropout = nn.Dropout(dropout) 
         self.output_layer = nn.Linear(hidden_size * 2, num_classes) 
         self.sigmoid = nn.Sigmoid()   
         self.criterion = nn.BCELoss()
-        self.accuracy_metric = MulticlassAccuracy(num_classes=num_classes)
+        self.accuracy_metric = BinaryAccuracy()
         self.lr = lr
 
     def forward(self, X):        
