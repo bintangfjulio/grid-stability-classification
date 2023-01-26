@@ -1,0 +1,6 @@
+__pycache__/
+log/
+checkpoints/
+dataset/test_set.pt
+dataset/train_set.pt
+dataset/valid_set.pt
