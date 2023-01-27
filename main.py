@@ -4,7 +4,6 @@ from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
 from util.preprocessor import Preprocessor
 from model.bilstm import BiLSTM
-from model.cnn1d import CNN1D
 
 if __name__ == "__main__":
     pl.seed_everything(42)
