@@ -8,7 +8,7 @@ from model.bilstm import BiLSTM
 if __name__ == "__main__":
     pl.seed_everything(42)
 
-    module = Preprocessor(batch_size=100)
+    module = Preprocessor(batch_size=64)
     model = BiLSTM(lr=1e-3)
     
     checkpoint_callback = ModelCheckpoint(dirpath='./checkpoints/bilstm_result', monitor='val_loss')
