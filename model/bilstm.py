@@ -7,9 +7,9 @@ from torchmetrics.classification import BinaryAccuracy
 class BiLSTM(pl.LightningModule):
     def __init__(self, lr, num_classes=2, input_size=12, hidden_size=300, num_layers=2, dropout=0.5):
         super(BiLSTM, self).__init__()
-        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, bidirectional=False, batch_first=True)
+        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, bidirectional=True, batch_first=True)
         self.dropout = nn.Dropout(dropout)
-        self.output_layer = nn.Linear(hidden_size, num_classes)
+        self.output_layer = nn.Linear(hidden_size * 2, num_classes)
         self.sigmoid = nn.Sigmoid()
         self.criterion = nn.BCELoss()
         self.accuracy_metric = BinaryAccuracy()
