@@ -9,7 +9,7 @@ from model.cnn1d import CNN1D
 if __name__ == "__main__":
     pl.seed_everything(42)
 
-    module = Preprocessor(batch_size=100)
+    module = Preprocessor(batch_size=64)
     model = BiLSTM(lr=1e-2)
     # model = CNN1D(lr=1e-3)
     
