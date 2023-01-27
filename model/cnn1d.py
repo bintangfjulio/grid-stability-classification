@@ -24,7 +24,7 @@ class CNN1D(pl.LightningModule):
         flattened = torch.cat(max_pooling_layer, 1)
         flattened = logits.squeeze(-1)
 
-        fully_connected_layer = self.fully_connected(self.dropout(flattened))
+        fully_connected_layer = self.output_layer(self.dropout(flattened))
         preds = self.sigmoid(fully_connected_layer)
 
         return preds
