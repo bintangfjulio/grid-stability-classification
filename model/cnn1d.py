@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from torchmetrics.classification import BinaryAccuracy
 
 class CNN1D(pl.LightningModule):
-    def __init__(self, lr, num_classes=2, in_channels=12, out_channels=96, window_sizes=[3, 4, 5], dropout=0.5):
+    def __init__(self, lr, num_classes=2, in_channels=12, out_channels=96, window_sizes=[1, 2, 3, 4, 5], dropout=0.5):
         super(CNN1D, self).__init__()
         self.convolutional_layers = nn.ModuleList([nn.Conv1d(in_channels=in_channels, out_channels=out_channels, kernel_size=window_size) for window_size in window_sizes])
         self.dropout = nn.Dropout(dropout)
