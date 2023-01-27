@@ -23,7 +23,7 @@ class BiLSTM(pl.LightningModule):
         return preds
 
     def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
+        optimizer = torch.optim.Adam(self.parameters(), lr=self.lr, weight_decay=0.9)
 
         return optimizer
 
