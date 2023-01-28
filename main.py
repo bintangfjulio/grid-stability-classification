@@ -4,7 +4,6 @@ from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
 from util.preprocessor import Preprocessor
 from model.bilstm import BiLSTM
-from model.classifier import Classifier
 
 if __name__ == "__main__":
     pl.seed_everything(42)
@@ -12,8 +11,7 @@ if __name__ == "__main__":
     module = Preprocessor(batch_size=64)
     num_classes, input_size = module.get_feature_size()
     
-    # model = BiLSTM(lr=1e-3, num_classes=num_classes, input_size=input_size)
-    model = Classifier(lr=1e-3, num_classes=num_classes, input_size=input_size)
+    model = BiLSTM(lr=1e-3, num_classes=num_classes, input_size=input_size)
     
     checkpoint_callback = ModelCheckpoint(dirpath='./checkpoints/bilstm_result', monitor='val_loss')
     logger = TensorBoardLogger('log', name='bilstm_result')
