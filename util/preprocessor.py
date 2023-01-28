@@ -117,3 +117,10 @@ class Preprocessor(pl.LightningDataModule):
         X_train, y_train = oversampling.fit_resample(X, y)
 
         return X_train, y_train
+
+    def get_features_size(self):
+        dataset = self.normalization(dataset)
+        X_train_res, y_train_res = self.oversampling(dataset)
+        
+        return len(X_train_res.columns.tolist())
+        
