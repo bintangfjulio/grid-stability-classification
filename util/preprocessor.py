@@ -118,8 +118,8 @@ class Preprocessor(pl.LightningDataModule):
 
         return X_train, y_train
 
-    def get_features_size(self):
+    def get_feature_size(self):
         dataset = self.normalization(self.dataset)
         X_train_res, y_train_res = self.oversampling(dataset)
         
-        return len(X_train_res.columns.tolist())
+        return len(X_train_res.columns.tolist()), len(y_train_res.drop_duplicates().values.tolist())
