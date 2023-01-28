@@ -9,7 +9,9 @@ if __name__ == "__main__":
     pl.seed_everything(42)
 
     module = Preprocessor(batch_size=64)
-    model = BiLSTM(lr=1e-3)
+    num_classes, input_size = module.get_feature_size()
+    
+    model = BiLSTM(lr=1e-3, num_classes=num_classes, input_size=input_size)
     
     checkpoint_callback = ModelCheckpoint(dirpath='./checkpoints/bilstm_result', monitor='val_loss')
     logger = TensorBoardLogger('log', name='bilstm_result')
