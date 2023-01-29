@@ -95,7 +95,7 @@ class Preprocessor(pl.LightningDataModule):
 
     def normalization(self, X):
         scaler = MinMaxScaler(feature_range=(-1, 1))
-        scaled_dataset = scaler.fit(X)
+        scaled_dataset = scaler.fit_transform(X)
 
         return scaled_dataset
 
