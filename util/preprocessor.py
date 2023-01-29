@@ -121,14 +121,6 @@ class Preprocessor(pl.LightningDataModule):
 
         return y_train
 
-    # def oversampling(self, dataset):
-    #     X = dataset.drop(['tau1','tau2','tau3','tau4','p1', 'p2', 'p3', 'p4','g1','g2','g3','g4','stab','stabf'], axis=1)
-    #     y = dataset['stabf']     
-    #     oversampling = SMOTE(random_state=42)
-    #     X_train, y_train = oversampling.fit_resample(X, y)
-
-    #     return X_train, y_train
-
     def get_feature_size(self):
         X = self.dataset[['tau1','tau2','tau3','tau4','p1', 'p2', 'p3', 'p4','g1','g2','g3','g4']]
         y = self.dataset['stabf']
