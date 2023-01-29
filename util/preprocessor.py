@@ -94,26 +94,26 @@ class Preprocessor(pl.LightningDataModule):
 
         return train_set, valid_set, test_set
 
-    def normalization(self, X):
-        scaled_dataset = pd.DataFrame(MinMaxScaler(feature_range=(-1, 1)).fit_transform(X), columns=X.columns, index=X.index)
+#     def normalization(self, X):
+#        scaled_dataset = pd.DataFrame(MinMaxScaler(feature_range=(-1, 1)).fit_transform(X), columns=X.columns, index=X.index)
 
-        return scaled_dataset
+#        return scaled_dataset
 
-    # def normalization(self, dataset):
-    #     dataset['tau1 Z'] = zscore(dataset['tau1'])
-    #     dataset['tau2 Z'] = zscore(dataset['tau2'])
-    #     dataset['tau3 Z'] = zscore(dataset['tau3'])
-    #     dataset['tau4 Z'] = zscore(dataset['tau4'])
-    #     dataset['p1 Z'] = zscore(dataset['p1'])
-    #     dataset['p2 Z'] = zscore(dataset['p2'])
-    #     dataset['p3 Z'] = zscore(dataset['p3'])
-    #     dataset['p4 Z'] = zscore(dataset['p4'])
-    #     dataset['g1 Z'] = zscore(dataset['g1'])
-    #     dataset['g2 Z'] = zscore(dataset['g2'])
-    #     dataset['g3 Z'] = zscore(dataset['g3'])
-    #     dataset['g4 Z'] = zscore(dataset['g4'])
+    def normalization(self, dataset):
+        dataset['tau1 Z'] = zscore(dataset['tau1'])
+        dataset['tau2 Z'] = zscore(dataset['tau2'])
+        dataset['tau3 Z'] = zscore(dataset['tau3'])
+        dataset['tau4 Z'] = zscore(dataset['tau4'])
+        dataset['p1 Z'] = zscore(dataset['p1'])
+        dataset['p2 Z'] = zscore(dataset['p2'])
+        dataset['p3 Z'] = zscore(dataset['p3'])
+        dataset['p4 Z'] = zscore(dataset['p4'])
+        dataset['g1 Z'] = zscore(dataset['g1'])
+        dataset['g2 Z'] = zscore(dataset['g2'])
+        dataset['g3 Z'] = zscore(dataset['g3'])
+        dataset['g4 Z'] = zscore(dataset['g4'])
 
-    #     return dataset
+        return dataset
 
     def label_encoding(self, y_train):
         encoder = {'unstable': [1, 0], 'stable': [0, 1]}
