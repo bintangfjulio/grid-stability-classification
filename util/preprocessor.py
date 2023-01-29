@@ -5,7 +5,7 @@ import pandas as pd
 import pytorch_lightning as pl
 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
+# from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import TensorDataset, DataLoader
 from scipy.stats import zscore
 from imblearn.over_sampling import SMOTE
