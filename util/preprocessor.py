@@ -66,7 +66,7 @@ class Preprocessor(pl.LightningDataModule):
         # X_train_res, y_train_res = self.oversampling(dataset)
 
         X_train_res = dataset[['tau1','tau2','tau3','tau4','p1', 'p2', 'p3', 'p4','g1','g2','g3','g4']]
-        y_train_res = self.dataset['stabf']
+        y_train_res = dataset['stabf']
 
         X_train_res = self.normalization(X_train_res)
         y_train_res = self.label_encoding(y_train_res)
