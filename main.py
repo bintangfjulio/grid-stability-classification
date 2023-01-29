@@ -14,11 +14,10 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     config = vars(args)
+    mining = config['mining']
 
     module = Preprocessor(batch_size=64)
     num_classes, input_size = module.get_feature_size()
-    
-    mining = config['mining']
     
     if mining == 'klasifikasi':
         model = Classifier(lr=1e-3, num_classes=num_classes, input_size=input_size)
