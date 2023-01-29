@@ -1,9 +1,9 @@
 import argparse
 import pytorch_lightning as pl
 
-from utils.preprocessor import Preprocessor
-from utils.classifier import Classifier
-from utils.regressor import Regressor
+from util.preprocessor import Preprocessor
+from util.classifier import Classifier
+from util.regressor import Regressor
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
 
