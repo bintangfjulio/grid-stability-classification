@@ -100,18 +100,18 @@ class Preprocessor(pl.LightningDataModule):
 #        return scaled_dataset
 
     def normalization(self, dataset):
-        dataset['tau1 Z'] = zscore(dataset['tau1'])
-        dataset['tau2 Z'] = zscore(dataset['tau2'])
-        dataset['tau3 Z'] = zscore(dataset['tau3'])
-        dataset['tau4 Z'] = zscore(dataset['tau4'])
-        dataset['p1 Z'] = zscore(dataset['p1'])
-        dataset['p2 Z'] = zscore(dataset['p2'])
-        dataset['p3 Z'] = zscore(dataset['p3'])
-        dataset['p4 Z'] = zscore(dataset['p4'])
-        dataset['g1 Z'] = zscore(dataset['g1'])
-        dataset['g2 Z'] = zscore(dataset['g2'])
-        dataset['g3 Z'] = zscore(dataset['g3'])
-        dataset['g4 Z'] = zscore(dataset['g4'])
+        dataset['tau1'] = zscore(dataset['tau1'])
+        dataset['tau2'] = zscore(dataset['tau2'])
+        dataset['tau3'] = zscore(dataset['tau3'])
+        dataset['tau4'] = zscore(dataset['tau4'])
+        dataset['p1'] = zscore(dataset['p1'])
+        dataset['p2'] = zscore(dataset['p2'])
+        dataset['p3'] = zscore(dataset['p3'])
+        dataset['p4'] = zscore(dataset['p4'])
+        dataset['g1'] = zscore(dataset['g1'])
+        dataset['g2'] = zscore(dataset['g2'])
+        dataset['g3'] = zscore(dataset['g3'])
+        dataset['g4'] = zscore(dataset['g4'])
 
         return dataset
 
