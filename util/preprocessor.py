@@ -5,7 +5,7 @@ import pandas as pd
 import pytorch_lightning as pl
 
 from sklearn.model_selection import train_test_split
-# from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import TensorDataset, DataLoader
 from scipy.stats import zscore
 from imblearn.over_sampling import SMOTE
@@ -97,26 +97,26 @@ class Preprocessor(pl.LightningDataModule):
 
         return train_set, valid_set, test_set
 
-#     def normalization(self, X):
-#        scaled_dataset = pd.DataFrame(MinMaxScaler(feature_range=(-1, 1)).fit_transform(X), columns=X.columns, index=X.index)
+    def normalization(self, X):
+       scaled_dataset = pd.DataFrame(MinMaxScaler(feature_range=(-1, 1)).fit_transform(X), columns=X.columns, index=X.index)
 
-#        return scaled_dataset
+       return scaled_dataset
 
-    def normalization(self, dataset):
-        dataset['tau1'] = zscore(dataset['tau1'])
-        dataset['tau2'] = zscore(dataset['tau2'])
-        dataset['tau3'] = zscore(dataset['tau3'])
-        dataset['tau4'] = zscore(dataset['tau4'])
-        dataset['p1'] = zscore(dataset['p1'])
-        dataset['p2'] = zscore(dataset['p2'])
-        dataset['p3'] = zscore(dataset['p3'])
-        dataset['p4'] = zscore(dataset['p4'])
-        dataset['g1'] = zscore(dataset['g1'])
-        dataset['g2'] = zscore(dataset['g2'])
-        dataset['g3'] = zscore(dataset['g3'])
-        dataset['g4'] = zscore(dataset['g4'])
+#     def normalization(self, dataset):
+#         dataset['tau1'] = zscore(dataset['tau1'])
+#         dataset['tau2'] = zscore(dataset['tau2'])
+#         dataset['tau3'] = zscore(dataset['tau3'])
+#         dataset['tau4'] = zscore(dataset['tau4'])
+#         dataset['p1'] = zscore(dataset['p1'])
+#         dataset['p2'] = zscore(dataset['p2'])
+#         dataset['p3'] = zscore(dataset['p3'])
+#         dataset['p4'] = zscore(dataset['p4'])
+#         dataset['g1'] = zscore(dataset['g1'])
+#         dataset['g2'] = zscore(dataset['g2'])
+#         dataset['g3'] = zscore(dataset['g3'])
+#         dataset['g4'] = zscore(dataset['g4'])
 
-        return dataset
+#         return dataset
 
     def label_encoding(self, y_train):
         encoder = {'unstable': [1, 0], 'stable': [0, 1]}
