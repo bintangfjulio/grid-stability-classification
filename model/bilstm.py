@@ -10,8 +10,6 @@ class BiLSTM(pl.LightningModule):
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers, bidirectional=True, batch_first=True)
         self.dropout = nn.Dropout(dropout)
         self.output_layer = nn.Linear(hidden_size * 2, num_classes)
-#         self.tanh = nn.Tanh()
-#         self.sigmoid = nn.Sigmoid()
         self.criterion = nn.BCEWithLogitsLoss()
         self.accuracy_metric = BinaryAccuracy()
         self.lr = lr
@@ -19,7 +17,6 @@ class BiLSTM(pl.LightningModule):
     def forward(self, X):
         lstm_output, _ = self.lstm(X)
         preds = self.output_layer(self.dropout(lstm_output))
-        # preds = self.tanh(fully_connected_layer)
 
         return preds
 
