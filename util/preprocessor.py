@@ -94,8 +94,7 @@ class Preprocessor(pl.LightningDataModule):
         return train_set, valid_set, test_set
 
     def normalization(self, X):
-        scaler = MinMaxScaler(feature_range=(-1, 1))
-        scaled_dataset = scaler.fit_transform(X)
+        scaled_dataset = pd.DataFrame(MinMaxScaler(feature_range=(-1, 1)).fit_transform(X), columns=X.columns, index=X.index)
 
         return scaled_dataset
 
