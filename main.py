@@ -21,6 +21,7 @@ if __name__ == "__main__":
     
     if mining == 'klasifikasi':
         model = Classifier(lr=1e-3, num_classes=num_classes, input_size=input_size)
+        
     elif mining == 'regresi':
         model = Regressor()
     
