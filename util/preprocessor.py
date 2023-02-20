@@ -110,7 +110,7 @@ class Preprocessor(pl.LightningDataModule):
         return dataset
 
     def label_encoding(self, y_train):
-        encoder = {'unstable': [1, 0], 'stable': [0, 1]}
+        encoder = {'unstable': 0, 'stable': 1}
         y_train = y_train.astype('str').map(encoder)
 
         return y_train
