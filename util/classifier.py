@@ -12,6 +12,7 @@ class Classifier(pl.LightningModule):
         self.accuracy_metric = BinaryAccuracy()
         self.lr = lr
         self.model = BiLSTM(num_classes=num_classes, input_size=input_size)
+        self.sigmoid = nn.Sigmoid()
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
@@ -22,10 +23,9 @@ class Classifier(pl.LightningModule):
         X, target = train_batch
 
         preds = self.model(X)
-        loss = self.criterion(preds, target=target.float())
+        loss = self.criterion(preds, target)
 
-        max_pred_idx = preds.argmax(1)
-        max_target_idx = target.argmax(1)
+        preds = self.sigmoid(preds)
         accuracy = self.accuracy_metric(max_pred_idx, max_target_idx)
 
         self.log_dict({'train_loss': loss, 'train_accuracy': accuracy}, prog_bar=True, on_epoch=True)
@@ -36,10 +36,9 @@ class Classifier(pl.LightningModule):
         X, target = valid_batch
 
         preds = self.model(X)
-        loss = self.criterion(preds, target=target.float())
+        loss = self.criterion(preds, target)
 
-        max_pred_idx = preds.argmax(1)
-        max_target_idx = target.argmax(1)
+        preds = self.sigmoid(preds)
         accuracy = self.accuracy_metric(max_pred_idx, max_target_idx)
 
         self.log_dict({'val_loss': loss, 'val_accuracy': accuracy}, prog_bar=True, on_epoch=True)
@@ -50,10 +49,9 @@ class Classifier(pl.LightningModule):
         X, target = test_batch
 
         preds = self.model(X)
-        loss = self.criterion(preds, target=target.float())
+        loss = self.criterion(preds, target)
 
-        max_pred_idx = preds.argmax(1)
-        max_target_idx = target.argmax(1)
+        preds = self.sigmoid(preds)
         accuracy = self.accuracy_metric(max_pred_idx, max_target_idx)
 
         self.log_dict({'test_loss': loss, 'test_accuracy': accuracy}, prog_bar=True, on_epoch=True)
