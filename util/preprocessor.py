@@ -110,13 +110,12 @@ class Preprocessor(pl.LightningDataModule):
         return dataset
 
     def label_encoding(self, y_train):
-        encoder = {'unstable': [1, 0], 'stable': [0, 1]}
+        encoder = {'unstable': 0, 'stable': 1}
         y_train = y_train.astype('str').map(encoder)
 
         return y_train
 
     def get_feature_size(self):
         X = self.dataset[['tau1','tau2','tau3','tau4','p1', 'p2', 'p3', 'p4','g1','g2','g3','g4']]
-        y = self.dataset['stabf']
         
-        return len(y.drop_duplicates().values.tolist()), len(X.columns.tolist())
+        return 1, len(X.columns.tolist())
