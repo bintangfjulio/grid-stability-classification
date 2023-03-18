@@ -26,7 +26,7 @@ class Classifier(pl.LightningModule):
         loss = self.criterion(preds, target)
 
         preds = self.sigmoid(preds)
-        accuracy = self.accuracy_metric(max_pred_idx, max_target_idx)
+        accuracy = self.accuracy_metric(preds, target)
 
         self.log_dict({'train_loss': loss, 'train_accuracy': accuracy}, prog_bar=True, on_epoch=True)
 
@@ -39,7 +39,7 @@ class Classifier(pl.LightningModule):
         loss = self.criterion(preds, target)
 
         preds = self.sigmoid(preds)
-        accuracy = self.accuracy_metric(max_pred_idx, max_target_idx)
+        accuracy = self.accuracy_metric(preds, target)
 
         self.log_dict({'val_loss': loss, 'val_accuracy': accuracy}, prog_bar=True, on_epoch=True)
 
@@ -52,7 +52,7 @@ class Classifier(pl.LightningModule):
         loss = self.criterion(preds, target)
 
         preds = self.sigmoid(preds)
-        accuracy = self.accuracy_metric(max_pred_idx, max_target_idx)
+        accuracy = self.accuracy_metric(preds, target)
 
         self.log_dict({'test_loss': loss, 'test_accuracy': accuracy}, prog_bar=True, on_epoch=True)
 
