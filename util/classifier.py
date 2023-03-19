@@ -23,8 +23,10 @@ class Classifier(pl.LightningModule):
         X, target = train_batch
 
         preds = self.model(X)
-        loss = self.criterion(preds, target)
-
+        
+        preds = preds.squeeze(1)
+        loss = self.criterion(preds, target.float())
+        
         preds = self.sigmoid(preds)
         accuracy = self.accuracy_metric(preds, target)
 
@@ -36,8 +38,10 @@ class Classifier(pl.LightningModule):
         X, target = valid_batch
 
         preds = self.model(X)
-        loss = self.criterion(preds, target)
-
+        
+        preds = preds.squeeze(1)
+        loss = self.criterion(preds, target.float())
+        
         preds = self.sigmoid(preds)
         accuracy = self.accuracy_metric(preds, target)
 
@@ -49,8 +53,10 @@ class Classifier(pl.LightningModule):
         X, target = test_batch
 
         preds = self.model(X)
-        loss = self.criterion(preds, target)
-
+        
+        preds = preds.squeeze(1)
+        loss = self.criterion(preds, target.float())
+        
         preds = self.sigmoid(preds)
         accuracy = self.accuracy_metric(preds, target)
 
