@@ -12,7 +12,7 @@ if __name__ == "__main__":
     num_classes, input_size = module.get_feature_size()
     
     model = Classifier(lr=1e-3, num_classes=num_classes, input_size=input_size)
-       
+
     checkpoint_callback = ModelCheckpoint(dirpath='./checkpoints/bilstm_result', monitor='val_loss')
     logger = TensorBoardLogger('log', name='bilstm_result')
     early_stop_callback = EarlyStopping(monitor='val_loss', min_delta=0.00, check_on_train_epoch_end=1, patience=10)

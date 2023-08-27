@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+  <!-- Link Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet" />
+
+  <!-- Link CSS -->
+  <link rel="stylesheet" type="text/css" href="style.css" />
+
+  <!-- Link Javascript -->
+  <script src="style.js"></script>
+
+  <!-- Link AOS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+  <title>Grid Stability Classifier</title>
+  <style>
+    * {
+      font-family: "Quicksand", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container-4 .btn {
+    width: 100%;
+  }
+
+    .container-0 {
+      display: flex;
+      justify-content: center;
+    }
+
+    .nav-item {
+      align-items: center;
+      text-align: center;
+      font-size: large;
+    }
+
+    .container-1 {
+      width: 100%;
+      display: flex;
+      box-sizing: border-box;
+      margin: auto;
+      justify-content: center;
+    }
+
+    .container-2 {
+      width: 100%;
+      display: flex;
+      box-sizing: border-box;
+      margin: auto;
+      padding: 50px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .container-3 {
+      width: 100%;
+      padding-left: 111px;
+      padding-right: 111px;
+      box-sizing: border-box;
+      margin: auto;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .container-4 {
+      width: 100%;
+      padding-left: 300px;
+      padding-right: 300px;
+      box-sizing: border-box;
+      margin: auto;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .menu-item {
+      box-sizing: border-box;
+      padding: 20px;
+      margin: 30px;
+      align-items: center;
+    }
+
+    .menu-desc {
+      border: 1px solid #b8b8b8;
+      border-radius: 20px;
+      background-color: #fff;
+    }
+    .menu-item img {
+      width: 100%;
+    }
+
+    .menu-img {
+      background-size: 100%;
+    }
+
+    .btn-product {
+      color: rgb(255, 255, 255);
+      background-color: rgba(40, 119, 165, 0.8);
+      border-radius: 0px 28.5px 2px;
+      padding: 8px 50px;
+      text-decoration: none;
+    }
+    .product-card {
+      margin: 20px;
+      padding: 10px;
+      border: none;
+    }
+
+    .btn {
+      background-color: rgba(40, 119, 165, 0.8);
+      border-radius: 15px;
+    }
+
+    .box {
+      transition: 0.5s;
+      border: 2px solid #ececec;
+      border-radius: 20px;
+    }
+
+    .box:hover {
+      transform: translateY(-40px);
+    }
+
+    .card-body {
+      text-align: center;
+    }
+
+    .card-title {
+      font-weight: 400;
+    }
+
+    .text-center {
+      height: 30px;
+    }
+
+    .rounded-video {
+      border-radius: 15px; 
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Bootstrap Javascript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  <nav class="navbar navbar-expand-lg navbar-light shadow-sm sticky-top">
+    <div class="container-fluid container-0">
+      <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item" data-aos="fade-down" data-aos-delay="300">
+            <a class="nav-link" id="navTools" href="#tools" onclick="setActiveNav('navTools')">Tools</a>
+          </li>
+          <li class="nav-item" data-aos="fade-down" data-aos-delay="300">
+            <a class="nav-link" id="navMethod" href="#method" onclick="setActiveNav('navMethod')">Methods</a>
+          </li>
+          <li class="nav-item" data-aos="fade-down" data-aos-delay="300">
+            <a class="nav-link" id="navFeatures" href="#features" onclick="setActiveNav('navFeatures')">Features</a>
+          </li>
+          <li class="nav-item" data-aos="fade-down" data-aos-delay="300">
+            <a class="nav-link" id="navClassifier" href="#classifier" onclick="setActiveNav('navClassifier')">Classifier</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div id="tools">
+    <h4 style="text-align: center; margin-top: 40px">Tools</h4>
+  </div>
+  
+  <div class="container-fluid container-1">
+    <div class="card product-card" style="width: 18rem" data-aos="zoom-in-up" data-aos-duration="1000">
+      <div class="box shadow">
+        <img src="../static/images/pytorch-logo.png" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">PyTorch</h5>
+        </div>
+      </div>
+    </div>
+    <div class="card product-card" style="width: 18rem" data-aos="zoom-in-up" data-aos-duration="1000">
+      <div class="box shadow">
+        <img src="../static/images/flask.jpg" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">Flask</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="method">
+    <h4 style="text-align: center; margin-top: 30px">Methods</h4>
+  </div>
+
+  <div class="container-fluid container-1">
+    <div class="card product-card" style="width: 18rem" data-aos="zoom-in-up" data-aos-duration="1000">
+      <div class="box shadow">
+        <div class="card-body">
+          <h5 class="card-title">Power Grid Dataset</h5>
+          <p class="card-text">Labeled Dataset from UCI</p>
+        </div>
+      </div>
+    </div>
+    <div class="card product-card" style="width: 18rem" data-aos="zoom-in-up" data-aos-duration="1000">
+      <div class="box shadow">
+        <div class="card-body">
+          <h5 class="card-title">SMOTE</h5>
+          <p class="card-text">Oversampling Technique</p>
+        </div>
+      </div>
+    </div>
+    <div class="card product-card" style="width: 18rem" data-aos="zoom-in-up" data-aos-duration="1000">
+      <div class="box shadow">
+        <div class="card-body">
+          <h5 class="card-title">Z Score</h5>
+          <p class="card-text">Normalization Technique</p>
+        </div>
+      </div>
+    </div>
+    <div class="card product-card" style="width: 18rem" data-aos="zoom-in-up" data-aos-duration="1000">
+      <div class="box shadow">
+        <div class="card-body">
+          <h5 class="card-title">Bi-LSTM</h5>
+          <p class="card-text">Deep Learning Architecture</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="features">
+    <h4 style="text-align: center; margin-top: 30px">Features</h4>
+  </div>
+
+  <div class="container-fluid container-3">
+    <div class="menu-item menu-desc shadow" data-aos="fade-right" data-aos-duration="1000">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col" style="text-align: center;">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>tau1</td>
+            <td>Electricity producer's reaction time in response to price change</td>
+          </tr>
+          <tr>
+            <td>tau2</td>
+            <td>First consumers' reaction time in response to price change</td>
+          </tr>
+          <tr>
+            <td>tau3</td>
+            <td>Second consumer's reaction time in response to price change</td>
+          </tr>
+          <tr>
+            <td>tau4</td>
+            <td>Third consumer's reaction time in response to price change</td>
+          </tr>
+          <tr>
+            <td>p1</td>
+            <td>Nominal power (positive real) produced by the producer (amount of electricity produced)</td>
+          </tr>
+          <tr>
+            <td>p2</td>
+            <td>Nominal power (negative real) consumed by the first consumer (amount of electricity consumed by the first consumer)</td>
+          </tr>
+          <tr>
+            <td>p3</td>
+            <td>Nominal power (negative real) consumed by the second consumer (amount of electricity consumed by the second consumer)</td>
+          </tr>
+          <tr>
+            <td>p4</td>
+            <td>Nominal power (negative real) consumed by the third consumer (amount of electricity consumed by the third consumer)</td>
+          </tr>
+          <tr>
+            <td>g1</td>
+            <td>(Gamma coefficient) proportional to price elasticity of producer</td>
+          </tr>
+          <tr>
+            <td>g2</td>
+            <td>(Gamma coefficient) proportional to the price elasticity of the first consumer</td>
+          </tr>
+          <tr>
+            <td>g3</td>
+            <td>(Gamma coefficient) proportional to the price elasticity of the second consumer</td>
+          </tr>
+          <tr>
+            <td>g4</td>
+            <td>(Gamma coefficient) proportional to the price elasticity of the third consumer</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="classifier">
+    <h4 style="text-align: center; margin-top: 60px">Classifier</h4>
+  </div>
+
+  <div class="container-fluid container-4">
+    <div class="menu-item menu-desc shadow" data-aos="fade-right" data-aos-duration="1000">
+      <form action="/" method="post">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>tau1</label>
+              <input type="text" name="tau1" placeholder="tau1" class="form-control" required/>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>tau2</label>
+              <input type="text" name="tau2" placeholder="tau2" class="form-control" required/>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>tau3</label>
+              <input type="text" name="tau3" placeholder="tau3" class="form-control" required/>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>tau4</label>
+              <input type="text" name="tau4" placeholder="tau4" class="form-control" required/>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>p1</label>
+              <input type="text" name="p1" placeholder="p1" class="form-control" required/>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>p2</label>
+              <input type="text" name="p2" placeholder="p2" class="form-control" required/>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>p3</label>
+              <input type="text" name="p3" placeholder="p3" class="form-control" required/>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>p4</label>
+              <input type="text" name="p4" placeholder="p4" class="form-control" required/>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>g1</label>
+              <input type="text" name="g1" placeholder="g1" class="form-control" required/>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>g2</label>
+              <input type="text" name="g2" placeholder="g2" class="form-control" required/>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>g3</label>
+              <input type="text" name="g3" placeholder="g3" class="form-control" required/>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>g4</label>
+              <input type="text" name="g4" placeholder="g4" class="form-control" required/>
+            </div>
+          </div>
+        </div>
+  
+        <button type="submit" class="btn btn-primary mt-4">Start Classify Stability</button>
+      </form>
+    </div>
+  </div>
+  
+  
+  <!-- Script AOS -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    function setActiveNav(navId) {
+      const navItems = document.querySelectorAll('.nav-link');
+      navItems.forEach(item => {
+        item.classList.remove('active');
+      });
+
+      const clickedNav = document.getElementById(navId);
+      clickedNav.classList.add('active');
+    }
+  </script>
+</body>
+
+</html>
