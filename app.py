@@ -11,18 +11,18 @@ app = Flask(__name__)
 def index():
     if request.method == 'POST':
         data = {
-            'tau1': [float(request.form.get('tau1'))],
-            'tau2': [float(request.form.get('tau2'))],
-            'tau3': [float(request.form.get('tau3'))],
-            'tau4': [float(request.form.get('tau4'))],
-            'p1': [float(request.form.get('p1'))],
-            'p2': [float(request.form.get('p2'))],
-            'p3': [float(request.form.get('p3'))],
-            'p4': [float(request.form.get('p4'))],
-            'g1': [float(request.form.get('g1'))],
-            'g2': [float(request.form.get('g2'))],
-            'g3': [float(request.form.get('g3'))],
-            'g4': [float(request.form.get('g4'))]
+            'tau1': float(request.form.get('tau1')),
+            'tau2': float(request.form.get('tau2')),
+            'tau3': float(request.form.get('tau3')),
+            'tau4': float(request.form.get('tau4')),
+            'p1': float(request.form.get('p1')),
+            'p2': float(request.form.get('p2')),
+            'p3': float(request.form.get('p3')),
+            'p4': float(request.form.get('p4')),
+            'g1': float(request.form.get('g1')),
+            'g2': float(request.form.get('g2')),
+            'g3': float(request.form.get('g3')),
+            'g4': float(request.form.get('g4'))
         }
 
         X = torch.tensor(pd.DataFrame(data).values.tolist())
