@@ -15,7 +15,6 @@ class Preprocessor(pl.LightningDataModule):
         self.dataset = pd.read_csv('dataset/simulated_electrical_grid.csv')
         self.batch_size = batch_size
         self.oversampling = SMOTE(random_state=42)
-        self.scaler = MinMaxScaler()
 
     def setup(self, stage=None):
         train_set, valid_set, test_set = self.preprocessor()   
@@ -68,11 +67,7 @@ class Preprocessor(pl.LightningDataModule):
         y = dataset['stabf']
 
         X_train_res, y_train_res = self.oversampling.fit_resample(X, y)
-
-        self.scaler.fit(X_train_res)
-        X_train_res = self.scaler.transform(X_train_res)
-        X_train_res = pd.DataFrame(X_train_res, columns=X.columns)  
-
+        X_train_res = self.normalization(X_train_res)
         y_train_res = self.label_encoding(y_train_res)
 
         X_train_valid, X_test, y_train_valid, y_test = train_test_split(X_train_res, y_train_res, test_size=0.2, random_state=42)
@@ -102,6 +97,10 @@ class Preprocessor(pl.LightningDataModule):
         y_train = y_train.astype('str').map(encoder)
 
         return y_train
+    
+    def normalization(self, X):
+        scaled_dataset = pd.DataFrame(MinMaxScaler(feature_range=(-1, 1)).fit_transform(X), columns=X.columns, index=X.index)
+        return scaled_dataset
 
     def get_feature_size(self):
         X = self.dataset[['tau1','tau2','tau3','tau4','p1', 'p2', 'p3', 'p4','g1','g2','g3','g4']]
