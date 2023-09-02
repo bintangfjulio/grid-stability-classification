@@ -1,6 +1,6 @@
-# Grid Stability Classifier
+# Electrical Grid Stability Classifier
 
-Sebuah website untuk menyimpulkan kestabilan electrical grid dari input data-data seputar grid yang diperlukan
+Sebuah website untuk menyimpulkan kestabilan dari electrical grid berdasarkan input data-data seputar grid yang diperlukan untuk bahan klasifikasi
 
 ## Download
 Clone repository ini
@@ -8,7 +8,7 @@ Clone repository ini
 https://github.com/bintangfjulio/grid_stability_classification
 ```
 ## Library Setup
-Install pytorch lightning, flask, imblearn, torch, pandas, dan sklearn
+Install PyTorch Lightning, Flask, Imbalanced-Learn, PyTorch, Pandas, dan Sci-Kit Learn
 ```
 pip install pytorch_lightning flask imblearn torch pandas sklearn
 ```
@@ -20,7 +20,7 @@ python app.py
 ```
 
 ## Train Model
-Jalankan trainer deep learning apabila ingin experiment/membuat model baru
+Jalankan trainer untuk deep learning apabila ingin experiment/membuat model baru
 ```
 python main.py
 ```
