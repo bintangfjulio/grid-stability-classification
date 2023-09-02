@@ -4,15 +4,13 @@ import torch.nn as nn
 
 from flask import Flask, render_template, request, redirect
 from model.bilstm import BiLSTM
-from sklearn.preprocessing import MinMaxScaler
 
 app = Flask(__name__)
 
-model = BiLSTM.load_from_checkpoint('checkpoints/bilstm_result/epoch=94-step=13680.ckpt', lr=1e-3, num_classes=1, input_size=12)
+model = BiLSTM.load_from_checkpoint('checkpoints/bilstm_result/epoch=47-step=6912.ckpt', lr=1e-3, num_classes=1, input_size=12)
 model.eval()
 model.freeze()
 
-scaler = MinMaxScaler()
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -33,10 +31,6 @@ def index():
         }
 
         df = pd.DataFrame(data).astype('float')
-        scaler.fit(df)
-        df = scaler.transform(df)
-
-
         X = torch.tensor(df.values.tolist())
 
         with torch.no_grad():
@@ -44,6 +38,8 @@ def index():
 
         preds = nn.Sigmoid()(preds.squeeze(1))
         preds = preds.numpy()
+
+        print(preds)
         
         if preds > 0.5:
             print('Stable')
@@ -55,6 +51,5 @@ def index():
 
     return render_template('index.html')
     
-
 if __name__ == '__main__':
     app.run(debug=True)

@@ -6,8 +6,8 @@ import pytorch_lightning as pl
 
 from sklearn.model_selection import train_test_split
 from torch.utils.data import TensorDataset, DataLoader
-from sklearn.preprocessing import MinMaxScaler
 from imblearn.over_sampling import SMOTE
+
 
 class Preprocessor(pl.LightningDataModule):
     def __init__(self, batch_size):
@@ -55,6 +55,7 @@ class Preprocessor(pl.LightningDataModule):
             valid_set = torch.load("dataset/valid_set.pt")
             test_set = torch.load("dataset/test_set.pt")
             print('[ Loading Completed ]\n')
+
         else:
             print("\nPreprocessing Data...")
             train_set, valid_set, test_set = self.preprocessing_data(self.dataset)
@@ -67,7 +68,6 @@ class Preprocessor(pl.LightningDataModule):
         y = dataset['stabf']
 
         X_train_res, y_train_res = self.oversampling.fit_resample(X, y)
-        X_train_res = self.normalization(X_train_res)
         y_train_res = self.label_encoding(y_train_res)
 
         X_train_valid, X_test, y_train_valid, y_test = train_test_split(X_train_res, y_train_res, test_size=0.2, random_state=42)
@@ -97,10 +97,6 @@ class Preprocessor(pl.LightningDataModule):
         y_train = y_train.astype('str').map(encoder)
 
         return y_train
-    
-    def normalization(self, X):
-        scaled_dataset = pd.DataFrame(MinMaxScaler(feature_range=(-1, 1)).fit_transform(X), columns=X.columns, index=X.index)
-        return scaled_dataset
 
     def get_feature_size(self):
         X = self.dataset[['tau1','tau2','tau3','tau4','p1', 'p2', 'p3', 'p4','g1','g2','g3','g4']]
