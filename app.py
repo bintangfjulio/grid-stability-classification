@@ -2,15 +2,14 @@ import torch
 import pandas as pd
 import torch.nn as nn
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request
 from model.bilstm import BiLSTM
 
 app = Flask(__name__)
 
-model = BiLSTM.load_from_checkpoint('checkpoints/bilstm_result/epoch=47-step=6912.ckpt', lr=1e-3, num_classes=1, input_size=12)
+model = BiLSTM.load_from_checkpoint('checkpoints/bilstm_result/epoch=23-step=3456.ckpt', lr=1e-3, num_classes=1, input_size=12)
 model.eval()
 model.freeze()
-
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -38,16 +37,14 @@ def index():
 
         preds = nn.Sigmoid()(preds.squeeze(1))
         preds = preds.numpy()
-
-        print(preds)
         
         if preds > 0.5:
-            print('Stable')
+            result = 'Stable'
 
         else:
-            print('Unstable')
+            result = 'Unstable'
 
-        return redirect('/#classifier')
+        return render_template('index.html', result=result)
 
     return render_template('index.html')
     

@@ -146,6 +146,8 @@
       border-radius: 15px; 
     }
   </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -214,14 +216,6 @@
         <div class="card-body">
           <h5 class="card-title">SMOTE</h5>
           <p class="card-text">Oversampling Technique</p>
-        </div>
-      </div>
-    </div>
-    <div class="card product-card" style="width: 18rem" data-aos="zoom-in-up" data-aos-duration="1000">
-      <div class="box shadow">
-        <div class="card-body">
-          <h5 class="card-title">Min Max Scaler</h5>
-          <p class="card-text">Normalization Technique</p>
         </div>
       </div>
     </div>
@@ -395,8 +389,6 @@
     </div>
   </div>
   
-  
-  <!-- Script AOS -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
     AOS.init();
@@ -410,6 +402,18 @@
       const clickedNav = document.getElementById(navId);
       clickedNav.classList.add('active');
     }
+  </script>
+
+  <script>
+    {% if result %}
+      Swal.fire({
+        title: 'Classification Result',
+        text: '{{ result }}',
+        icon: 'info',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+      });
+    {% endif %}
   </script>
 </body>
 
