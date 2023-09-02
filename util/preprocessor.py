@@ -6,7 +6,7 @@ import pytorch_lightning as pl
 
 from sklearn.model_selection import train_test_split
 from torch.utils.data import TensorDataset, DataLoader
-from scipy.stats import zscore
+from sklearn.preprocessing import MinMaxScaler
 from imblearn.over_sampling import SMOTE
 
 class Preprocessor(pl.LightningDataModule):
@@ -15,6 +15,7 @@ class Preprocessor(pl.LightningDataModule):
         self.dataset = pd.read_csv('dataset/simulated_electrical_grid.csv')
         self.batch_size = batch_size
         self.oversampling = SMOTE(random_state=42)
+        self.scaler = MinMaxScaler()
 
     def setup(self, stage=None):
         train_set, valid_set, test_set = self.preprocessor()   
@@ -63,12 +64,15 @@ class Preprocessor(pl.LightningDataModule):
         return train_set, valid_set, test_set
     
     def preprocessing_data(self, dataset):
-        X = dataset[['tau1','tau2','tau3','tau4','p1', 'p2', 'p3', 'p4','g1','g2','g3','g4']]
+        X = dataset[['tau1', 'tau2', 'tau3', 'tau4', 'p1', 'p2', 'p3', 'p4', 'g1', 'g2', 'g3', 'g4']]
         y = dataset['stabf']
-        
+
         X_train_res, y_train_res = self.oversampling.fit_resample(X, y)
 
-        X_train_res = self.normalization(X_train_res)
+        self.scaler.fit(X_train_res)
+        X_train_res = self.scaler.transform(X_train_res)
+        X_train_res = pd.DataFrame(X_train_res, columns=X.columns)  
+
         y_train_res = self.label_encoding(y_train_res)
 
         X_train_valid, X_test, y_train_valid, y_test = train_test_split(X_train_res, y_train_res, test_size=0.2, random_state=42)
@@ -92,22 +96,6 @@ class Preprocessor(pl.LightningDataModule):
         torch.save(test_set, "dataset/test_set.pt")
 
         return train_set, valid_set, test_set
-
-    def normalization(self, dataset):
-        dataset['tau1'] = zscore(dataset['tau1'])
-        dataset['tau2'] = zscore(dataset['tau2'])
-        dataset['tau3'] = zscore(dataset['tau3'])
-        dataset['tau4'] = zscore(dataset['tau4'])
-        dataset['p1'] = zscore(dataset['p1'])
-        dataset['p2'] = zscore(dataset['p2'])
-        dataset['p3'] = zscore(dataset['p3'])
-        dataset['p4'] = zscore(dataset['p4'])
-        dataset['g1'] = zscore(dataset['g1'])
-        dataset['g2'] = zscore(dataset['g2'])
-        dataset['g3'] = zscore(dataset['g3'])
-        dataset['g4'] = zscore(dataset['g4'])
-
-        return dataset
 
     def label_encoding(self, y_train):
         encoder = {'unstable': 0, 'stable': 1}

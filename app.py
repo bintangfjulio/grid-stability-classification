@@ -1,9 +1,10 @@
 import torch
 import pandas as pd
+import torch.nn as nn
 
 from flask import Flask, render_template, request, redirect
 from model.bilstm import BiLSTM
-from scipy.stats import zscore
+from util.preprocessor import Preprocessor
 
 app = Flask(__name__)
 
@@ -11,39 +12,45 @@ app = Flask(__name__)
 def index():
     if request.method == 'POST':
         data = {
-            'tau1': float(request.form.get('tau1')),
-            'tau2': float(request.form.get('tau2')),
-            'tau3': float(request.form.get('tau3')),
-            'tau4': float(request.form.get('tau4')),
-            'p1': float(request.form.get('p1')),
-            'p2': float(request.form.get('p2')),
-            'p3': float(request.form.get('p3')),
-            'p4': float(request.form.get('p4')),
-            'g1': float(request.form.get('g1')),
-            'g2': float(request.form.get('g2')),
-            'g3': float(request.form.get('g3')),
-            'g4': float(request.form.get('g4'))
+            'tau1': [request.form.get('tau1')],
+            'tau2': [request.form.get('tau2')],
+            'tau3': [request.form.get('tau3')],
+            'tau4': [request.form.get('tau4')],
+            'p1': [request.form.get('p1')],
+            'p2': [request.form.get('p2')],
+            'p3': [request.form.get('p3')],
+            'p4': [request.form.get('p4')],
+            'g1': [request.form.get('g1')],
+            'g2': [request.form.get('g2')],
+            'g3': [request.form.get('g3')],
+            'g4': [request.form.get('g4')]
         }
 
-        X = torch.tensor(pd.DataFrame(data).values.tolist())
-        classify(X)
+        df = pd.DataFrame(data).astype('float')
+
+        module = Preprocessor(batch_size=64)
+        num_classes, input_size = module.get_feature_size()
+
+        model = BiLSTM.load_from_checkpoint('checkpoints/bilstm_result/epoch=34-step=5040.ckpt', lr=1e-3, num_classes=num_classes, input_size=input_size)
+        model.eval()
+        model.freeze()
+        X = torch.tensor(df.values.tolist())
+
+        with torch.no_grad():
+            preds = model(X)
+
+        preds = nn.Sigmoid()(preds.squeeze(1))
+        preds = preds.numpy()
+        
+        if preds > 0.5:
+            print('Stable')
+        else:
+            print('unstable')
 
         return redirect('/#classifier')
 
     return render_template('index.html')
-
-def classify(X):
-    model = BiLSTM.load_from_checkpoint('checkpoints/bilstm_result/epoch=34-step=5040.ckpt')
-
-    model.eval()
-    X_tensor = torch.tensor(X)
-
-    with torch.no_grad():
-        predictions = model(X_tensor)
-
-    predictions = predictions.numpy()
-    print(predictions)
-
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
