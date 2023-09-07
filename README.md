@@ -1,6 +1,6 @@
 # Electrical Grid Stability Classifier
 
-Sebuah website untuk menyimpulkan kestabilan dari electrical grid berdasarkan input data-data seputar grid yang diperlukan untuk bahan klasifikasi
+Sebuah website untuk menyimpulkan kestabilan dari electrical grid berdasarkan input data-data seputar grid yang dibutuhkan sebagai feature/variabel penentu klasifikasi
 
 ## Download
 Clone repository ini
