@@ -443,10 +443,8 @@
         const input = event.target;
         let value = input.value;
 
-        // Remove all characters except digits and decimal point
-        value = value.replace(/[^0-9.]/g, "");
+        value = value.replace(/[^0-9.-]/g, "");
 
-        // Remove multiple decimal points
         const parts = value.split(".");
         if (parts.length > 2) {
           value = parts[0] + "." + parts.slice(1).join("");
@@ -455,7 +453,6 @@
         input.value = value;
       }
 
-      // Attach the filter function to all number input fields
       document.querySelectorAll('input[type="text"]').forEach((input) => {
         input.addEventListener("input", filterNumericInput);
       });
